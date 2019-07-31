@@ -1,0 +1,629 @@
+<pre>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* Example source code for an Arduino to show how</font>
+<font color="#95a5a6">* to use SPI to communicate with an Allegro A1335</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Written by K. Robert Bate, Allegro MicroSystems, LLC.</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* A1335SPIExample is distributed in the hope that it will be useful,</font>
+<font color="#95a5a6">* but WITHOUT ANY WARRANTY; without even the implied warranty of</font>
+<font color="#95a5a6">* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+<font color="#5e6d03">#define</font> <font color="#000000">kNOERROR</font> <font color="#000000">0</font>
+<font color="#5e6d03">#define</font> <font color="#000000">kPRIMARYREADERROR</font> <font color="#000000">1</font>
+<font color="#5e6d03">#define</font> <font color="#000000">kEXTENDEDREADTIMEOUTERROR</font> <font color="#000000">2</font>
+<font color="#5e6d03">#define</font> <font color="#000000">kPRIMARYWRITEERROR</font> <font color="#000000">3</font>
+<font color="#5e6d03">#define</font> <font color="#000000">kEXTENDEDWRITETIMEOUTERROR</font> <font color="#000000">4</font>
+<font color="#5e6d03">#define</font> <font color="#000000">kCRCERROR</font> <font color="#000000">5</font>
+<font color="#5e6d03">#define</font> <font color="#000000">kUNABLETOCHANGEPROCESSORSTATE</font> <font color="#000000">6</font>
+
+<font color="#00979c">const</font> <font color="#00979c">uint16_t</font> <font color="#000000">LEDPin</font> <font color="#434f54">=</font> <font color="#000000">13</font><font color="#000000">;</font>
+<font color="#00979c">const</font> <font color="#00979c">uint32_t</font> <font color="#000000">WRITE</font> <font color="#434f54">=</font> <font color="#000000">0x40</font><font color="#000000">;</font>
+<font color="#00979c">const</font> <font color="#00979c">uint32_t</font> <font color="#000000">READ</font> <font color="#434f54">=</font> <font color="#000000">0x00</font><font color="#000000">;</font>
+<font color="#00979c">const</font> <font color="#00979c">uint32_t</font> <font color="#000000">COMMAND_MASK</font> <font color="#434f54">=</font> <font color="#000000">0xC0</font><font color="#000000">;</font>
+<font color="#00979c">const</font> <font color="#00979c">uint32_t</font> <font color="#000000">ADDRESS_MASK</font> <font color="#434f54">=</font> <font color="#000000">0x3F</font><font color="#000000">;</font>
+<font color="#00979c">unsigned</font> <font color="#00979c">long</font> <font color="#000000">nextTime</font><font color="#000000">;</font>
+<font color="#00979c">bool</font> <font color="#000000">ledOn</font> <font color="#434f54">=</font> <font color="#00979c">false</font><font color="#000000">;</font>
+<font color="#00979c">bool</font> <font color="#000000">includeCRC</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">unused</font><font color="#000000">;</font>
+<font color="#00979c">uint32_t</font> <font color="#000000">flags</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">angle</font><font color="#000000">;</font>
+<font color="#00979c">uint32_t</font> <font color="#000000">flagsAndZeroOffset</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Initialize SPI</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+
+<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">LEDPin</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Initialize serial</font>
+<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">115200</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; If the Arduino has built in USB, keep the next line</font>
+<font color="#434f54">&#47;&#47; in to wait for the Serial to initialize</font>
+<font color="#5e6d03">while</font> <font color="#000000">(</font><font color="#434f54">!</font><b><font color="#d35400">Serial</font></b><font color="#000000">)</font><font color="#000000">;</font>
+
+<font color="#000000">nextTime</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">LEDPin</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Make sure all of the SPI pins are</font>
+<font color="#434f54">&#47;&#47; ready by doing a read</font>
+<font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x0</font><font color="#434f54">,</font> <font color="#000000">unused</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Unlock the device</font>
+<font color="#000000">ExtendedWrite</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0xFFFE</font><font color="#434f54">,</font> <font color="#000000">0x27811F77</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Make sure the device is unlocked</font>
+<font color="#000000">ExtendedRead</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x22</font><font color="#434f54">,</font> <font color="#000000">flags</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#434f54">!</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">flags</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0022</font><font color="#000000">)</font> <font color="#434f54">==</font> <font color="#000000">0x0020</font><font color="#000000">)</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Device is not Unlocked&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#434f54">&#47;&#47; Zero the angle</font>
+<font color="#434f54">&#47;&#47; Extended location 0x06 contains flags in the MSW and the Zero Angle values in the LSW</font>
+<font color="#434f54">&#47;&#47; so get both and zero out ZeroAngle</font>
+<font color="#000000">ExtendedRead</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x06</font><font color="#434f54">,</font> <font color="#000000">flagsAndZeroOffset</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">flagsAndZeroOffset</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">flagsAndZeroOffset</font> <font color="#434f54">&amp;</font> <font color="#000000">0xFFFF0000</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">ExtendedWrite</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x06</font><font color="#434f54">,</font> <font color="#000000">flagsAndZeroOffset</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Get the current angle. It is now without the ZeroAngle correction</font>
+<font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x20</font><font color="#434f54">,</font> <font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Copy the read angle into location 0x5C preserving the flags</font>
+<font color="#000000">flagsAndZeroOffset</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">flagsAndZeroOffset</font> <font color="#434f54">&amp;</font> <font color="#000000">0xFFFF0000</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">angle</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">4</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0000FFFF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">ExtendedWrite</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x06</font><font color="#434f54">,</font> <font color="#000000">flagsAndZeroOffset</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+ &nbsp;<font color="#00979c">uint16_t</font> <font color="#000000">angle</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">uint16_t</font> <font color="#000000">temperature</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">uint16_t</font> <font color="#000000">fieldStrength</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; Every second, read the angle, temperature and field strength</font>
+ &nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">nextTime</font> <font color="#434f54">&lt;</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font>
+ &nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x20</font><font color="#434f54">,</font> <font color="#000000">angle</font><font color="#000000">)</font> <font color="#434f54">==</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">CalculateParity</font><font color="#000000">(</font><font color="#000000">angle</font><font color="#000000">)</font><font color="#000000">)</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Angle = &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">(</font><font color="#00979c">float</font><font color="#000000">)</font><font color="#000000">(</font><font color="#000000">angle</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FFF</font><font color="#000000">)</font> <font color="#434f54">*</font> <font color="#000000">360.0</font> <font color="#434f54">&#47;</font> <font color="#000000">4096.0</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34; Degrees&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Parity error on Angle read&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Unable to read Angle&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x28</font><font color="#434f54">,</font> <font color="#000000">temperature</font><font color="#000000">)</font> <font color="#434f54">==</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Temperature = &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#00979c">float</font><font color="#000000">)</font><font color="#000000">(</font><font color="#000000">temperature</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FFF</font><font color="#000000">)</font> <font color="#434f54">&#47;</font> <font color="#000000">8.0</font><font color="#000000">)</font> <font color="#434f54">-</font> <font color="#000000">273.15</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34; C&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Unable to read Temperature&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">SS</font><font color="#434f54">,</font> <font color="#000000">0x2A</font><font color="#434f54">,</font> <font color="#000000">fieldStrength</font><font color="#000000">)</font> <font color="#434f54">==</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Field Strength = &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">fieldStrength</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FFF</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Gauss&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Unable to read Field Strength&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">nextTime</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">500L</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; Blink the LED every half second</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">ledOn</font><font color="#000000">)</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">LEDPin</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">ledOn</font> <font color="#434f54">=</font> <font color="#00979c">false</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">else</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">LEDPin</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">ledOn</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+ &nbsp;<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* PrimaryRead</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Read from the primary serial registers</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font> <font color="#000000">address</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font><font color="#434f54">&amp;</font> <font color="#000000">value</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">command</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">includeCRC</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint8_t</font> <font color="#000000">crcValue</font><font color="#000000">;</font>
+<font color="#00979c">uint8_t</font> <font color="#000000">crcCommand</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">beginTransaction</font><font color="#000000">(</font><font color="#000000">SPISettings</font><font color="#000000">(</font><font color="#000000">1000000</font><font color="#434f54">,</font> <font color="#00979c">MSBFIRST</font><font color="#434f54">,</font> <font color="#00979c">SPI_MODE3</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; On the Teensy, SPI0_CTAR0 is used to describe the SPI transaction for transfer (byte)</font>
+<font color="#434f54">&#47;&#47; while SPI0_CTAR1 is used to describe the SPI transaction for transfer16.</font>
+<font color="#434f54">&#47;&#47; To do a 20 bit transfer, change the length of the transaction to 4 bits for transfer</font>
+<font color="#434f54">&#47;&#47; and do a transfer16 followed by a transfer.</font>
+
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">READ</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">;</font>
+<font color="#000000">crcCommand</font> <font color="#434f54">=</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the device the register you want to read</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the command again to read the contents</font>
+<font color="#000000">value</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">crcValue</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Restore the 8 bit description</font>
+
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">endTransaction</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Check the CRC value</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">value</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">crcValue</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Calculated CRC = &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#434f54">+</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">value</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;crcValue = &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">crcValue</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">return</font> <font color="#000000">kCRCERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">else</font>
+<font color="#000000">{</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">beginTransaction</font><font color="#000000">(</font><font color="#000000">SPISettings</font><font color="#000000">(</font><font color="#000000">1000000</font><font color="#434f54">,</font> <font color="#00979c">MSBFIRST</font><font color="#434f54">,</font> <font color="#00979c">SPI_MODE3</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">READ</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the device the register you want to read</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the command again to read the contents</font>
+<font color="#000000">value</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">endTransaction</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">return</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* PrimaryRead</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Read from the primary serial registers</font>
+<font color="#95a5a6">*&#47;</font>
+
+<font color="#00979c">void</font> <font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font><font color="#434f54">*</font> <font color="#000000">addresses</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font><font color="#434f54">*</font> <font color="#000000">values</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font><font color="#434f54">*</font> <font color="#000000">errors</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font> <font color="#000000">numberOfItems</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">command</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">includeCRC</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint8_t</font> <font color="#000000">crcValue</font><font color="#000000">;</font>
+<font color="#00979c">uint8_t</font> <font color="#000000">crcCommand</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">beginTransaction</font><font color="#000000">(</font><font color="#000000">SPISettings</font><font color="#000000">(</font><font color="#000000">1000000</font><font color="#434f54">,</font> <font color="#00979c">MSBFIRST</font><font color="#434f54">,</font> <font color="#00979c">SPI_MODE3</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; On the Teensy, SPI0_CTAR0 is used to describe the SPI transaction</font>
+<font color="#434f54">&#47;&#47; for transfer (byte) while SPI0_CTAR1 is used to describe the SPI</font>
+<font color="#434f54">&#47;&#47; transaction for transfer16.</font>
+<font color="#434f54">&#47;&#47; To do a 20 bit transfer, change the length of the transaction to</font>
+<font color="#434f54">&#47;&#47; 4 bits for transfer and do a transfer16 followed by a transfer.</font>
+
+
+<font color="#434f54">&#47;&#47; to send 4 bits</font>
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">READ</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">;</font>
+<font color="#000000">crcCommand</font> <font color="#434f54">=</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the device the register you want to read</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">index</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">index</font> <font color="#434f54">&lt;</font> <font color="#000000">(</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">index</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">index</font> <font color="#434f54">+</font> <font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">READ</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">;</font>
+<font color="#000000">crcCommand</font> <font color="#434f54">=</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the command again to read the contents</font>
+<font color="#000000">values</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">crcValue</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Check the CRC of the read value</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">crcValue</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kCRCERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">else</font>
+<font color="#000000">{</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+
+<font color="#434f54">&#47;&#47; send the command again to read the contents</font>
+<font color="#000000">values</font><font color="#000000">[</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">crcValue</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Check the CRC value</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">]</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">crcValue</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kCRCERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">else</font>
+<font color="#000000">{</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#434f54">&#47;&#47; Restore the 8 bit description</font>
+
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">endTransaction</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">else</font>
+<font color="#000000">{</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">beginTransaction</font><font color="#000000">(</font><font color="#000000">SPISettings</font><font color="#000000">(</font><font color="#000000">1000000</font><font color="#434f54">,</font> <font color="#00979c">MSBFIRST</font><font color="#434f54">,</font> <font color="#00979c">SPI_MODE3</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">READ</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the device the register you want to read</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">index</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">index</font> <font color="#434f54">&lt;</font> <font color="#000000">(</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">index</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">index</font> <font color="#434f54">+</font> <font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">READ</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">;</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the command again to read the contents</font>
+<font color="#000000">values</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; send the command again to read the contents</font>
+<font color="#000000">values</font><font color="#000000">[</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">=</font> <b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">numberOfItems</font> <font color="#434f54">-</font> <font color="#000000">1</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">endTransaction</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* PrimaryWrite</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Write to the primary serial registers</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">PrimaryWrite</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font> <font color="#000000">address</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font> <font color="#000000">value</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">command</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">includeCRC</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint8_t</font> <font color="#000000">crcCommand</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">beginTransaction</font><font color="#000000">(</font><font color="#000000">SPISettings</font><font color="#000000">(</font><font color="#000000">1000000</font><font color="#434f54">,</font> <font color="#00979c">MSBFIRST</font><font color="#434f54">,</font> <font color="#00979c">SPI_MODE3</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; On the Teensy, SPI0_CTAR0 is used to describe the SPI transaction for transfer</font>
+<font color="#434f54">&#47;&#47; while SPI0_CTAR1 is used to describe the SPI transaction for transfer16.</font>
+<font color="#434f54">&#47;&#47; To do a 20 bit transfer, change the length of the transaction to 4 bits for transfer</font>
+<font color="#434f54">&#47;&#47; and do a transfer16 followed by a transfer.</font>
+
+
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">value</font> <font color="#434f54">&gt;&gt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">crcCommand</font> <font color="#434f54">=</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send most significant byte of register data</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send the crc</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">+</font> <font color="#000000">1</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font> <font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">value</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">crcCommand</font> <font color="#434f54">=</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send least significant byte of register data</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send the crc</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Restore the 8 bit description</font>
+
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">endTransaction</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">else</font>
+<font color="#000000">{</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">beginTransaction</font><font color="#000000">(</font><font color="#000000">SPISettings</font><font color="#000000">(</font><font color="#000000">1000000</font><font color="#434f54">,</font> <font color="#00979c">MSBFIRST</font><font color="#434f54">,</font> <font color="#00979c">SPI_MODE3</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">value</font> <font color="#434f54">&gt;&gt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send most significant byte of register data</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">+</font> <font color="#000000">1</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">value</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send least significant byte of register data</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">endTransaction</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">return</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* PrimaryWrite</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Write to the primary serial registers</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">void</font> <font color="#000000">PrimaryWrite</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font><font color="#434f54">*</font> <font color="#000000">addresses</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font><font color="#434f54">*</font> <font color="#000000">values</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font><font color="#434f54">*</font> <font color="#000000">errors</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font> <font color="#000000">numberOfItems</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">command</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">beginTransaction</font><font color="#000000">(</font><font color="#000000">SPISettings</font><font color="#000000">(</font><font color="#000000">1000000</font><font color="#434f54">,</font> <font color="#00979c">MSBFIRST</font><font color="#434f54">,</font> <font color="#00979c">SPI_MODE3</font><font color="#000000">)</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">includeCRC</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint8_t</font> <font color="#000000">crcCommand</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; On the Teensy, SPI0_CTAR0 is used to describe the SPI transaction</font>
+<font color="#434f54">&#47;&#47; for transfer (byte) while SPI0_CTAR1 is used to describe the SPI</font>
+<font color="#434f54">&#47;&#47; transaction for transfer16.</font>
+<font color="#434f54">&#47;&#47; To do a 20 bit transfer, change the length of the transaction to</font>
+<font color="#434f54">&#47;&#47; 4 bits for transfer and do a transfer16 followed by a transfer.</font>
+
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">index</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">index</font> <font color="#434f54">&lt;</font> <font color="#000000">numberOfItems</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">index</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">&gt;&gt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">crcCommand</font> <font color="#434f54">=</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send most significant byte of register data</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send the crc</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">+</font> <font color="#000000">1</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font> <font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">crcCommand</font> <font color="#434f54">=</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send least significant byte of register data</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#d35400">transfer</font><font color="#000000">(</font><font color="#000000">crcCommand</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send the crc</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#000000">}</font>
+<font color="#5e6d03">else</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">index</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">index</font> <font color="#434f54">&lt;</font> <font color="#000000">numberOfItems</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">index</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#434f54">&#47;&#47; Combine the register address and the command into one byte</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">&gt;&gt;</font> <font color="#000000">8</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send most significant byte of register data</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">command</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">(</font><font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">+</font> <font color="#000000">1</font><font color="#000000">)</font> <font color="#434f54">&amp;</font> <font color="#000000">ADDRESS_MASK</font><font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">WRITE</font><font color="#000000">)</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">8</font> <font color="#000000">)</font> <font color="#434f54">|</font> <font color="#000000">(</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0FF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; take the chip select low to select the device</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">transfer16</font><font color="#000000">(</font><font color="#000000">command</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; Send least significant byte of register data</font>
+<font color="#434f54">&#47;&#47; take the chip select high to de-select:</font>
+<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">HIGH</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">kNOERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<b><font color="#d35400">SPI</font></b><font color="#434f54">.</font><font color="#000000">endTransaction</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* ExtendedRead</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Read from the SRAM, EEPROM, AUX or Extended Registers</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">ExtendedRead</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font> <font color="#000000">address</font><font color="#434f54">,</font> <font color="#00979c">uint32_t</font><font color="#434f54">&amp;</font> <font color="#000000">value</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">readFlags</font><font color="#000000">;</font>
+<font color="#00979c">uint32_t</font> <font color="#000000">timeout</font><font color="#000000">;</font>
+<font color="#00979c">uint32_t</font> <font color="#000000">currentTime</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Write the address to the Extended Read Address register</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x0A</font><font color="#434f54">,</font> <font color="#000000">address</font> <font color="#434f54">&amp;</font> <font color="#000000">0xFFFF</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">!=</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#434f54">&#47;&#47; Initiate the extended read</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x0C</font><font color="#434f54">,</font> <font color="#000000">0x8000</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">!=</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">timeout</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">100L</font><font color="#000000">;</font>
+<font color="#5e6d03">do</font> <font color="#434f54">&#47;&#47; Wait for the read to be complete</font>
+<font color="#000000">{</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x0C</font><font color="#434f54">,</font> <font color="#000000">readFlags</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">!=</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#434f54">&#47;&#47; Make sure the read is not taking too long</font>
+<font color="#000000">currentTime</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">timeout</font> <font color="#434f54">&lt;</font> <font color="#000000">currentTime</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">kEXTENDEDREADTIMEOUTERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font> <font color="#5e6d03">while</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">readFlags</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0001</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">0x0001</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Read the 2 data registers</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">{</font><font color="#000000">0x0E</font><font color="#434f54">,</font> <font color="#000000">0x10</font><font color="#000000">}</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">values</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">addresses</font><font color="#434f54">,</font> <font color="#000000">values</font><font color="#434f54">,</font> <font color="#000000">errors</font><font color="#434f54">,</font> <font color="#000000">2</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Check all of the results of the reads</font>
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">index</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">index</font> <font color="#434f54">&lt;</font> <font color="#000000">2</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">index</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">!=</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#434f54">&#47;&#47; Combine them</font>
+<font color="#000000">value</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#00979c">uint32_t</font><font color="#000000">)</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font> <font color="#434f54">&lt;&lt;</font> <font color="#000000">16</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#00979c">uint32_t</font><font color="#000000">)</font><font color="#000000">values</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* ExtendedWrite</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Write to the SRAM, EEPROM, AUX or Extended Access Commands</font>
+<font color="#95a5a6">Allegro MicroSystems, LLC 18</font>
+<font color="#95a5a6">115 Northeast Cutoff</font>
+<font color="#95a5a6">Worcester, Massachusetts 01615-0036 U.S.A.</font>
+<font color="#95a5a6">1.508.853.5000; </font><u><font color="#95a5a6">www.allegromicro.com</font></u><font color="#95a5a6"></font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">ExtendedWrite</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">cs</font><font color="#434f54">,</font> <font color="#00979c">uint16_t</font> <font color="#000000">address</font><font color="#434f54">,</font> <font color="#00979c">uint32_t</font> <font color="#000000">value</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">writeFlags</font><font color="#000000">;</font>
+<font color="#00979c">uint32_t</font> <font color="#000000">timeout</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">addresses</font><font color="#000000">[</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">{</font><font color="#000000">0x02</font><font color="#434f54">,</font> <font color="#000000">0x04</font><font color="#434f54">,</font> <font color="#000000">0x06</font><font color="#434f54">,</font> <font color="#000000">0x08</font><font color="#000000">}</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">values</font><font color="#000000">[</font><font color="#000000">]</font> <font color="#434f54">=</font> <font color="#000000">{</font><font color="#000000">address</font><font color="#434f54">,</font> <font color="#000000">(</font><font color="#00979c">uint16_t</font><font color="#000000">)</font><font color="#000000">(</font><font color="#000000">value</font> <font color="#434f54">&gt;&gt;</font> <font color="#000000">16</font><font color="#000000">)</font><font color="#434f54">,</font> <font color="#000000">(</font><font color="#00979c">uint16_t</font><font color="#000000">)</font><font color="#000000">value</font><font color="#434f54">,</font> <font color="#000000">0x8000</font><font color="#000000">}</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">4</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Write into the extended address register</font>
+<font color="#000000">PrimaryWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">addresses</font><font color="#434f54">,</font> <font color="#000000">values</font><font color="#434f54">,</font> <font color="#000000">errors</font><font color="#434f54">,</font> <font color="#000000">4</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Check all of the results of the writes</font>
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">index</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">index</font> <font color="#434f54">&lt;</font> <font color="#000000">4</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">index</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font> <font color="#434f54">!=</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">errors</font><font color="#000000">[</font><font color="#000000">index</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#434f54">&#47;&#47; If writing to the EEPROM, generate the Program</font>
+<font color="#434f54">&#47;&#47; Pulses on Vcc</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">&gt;=</font> <font color="#000000">0x300</font><font color="#000000">)</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">(</font><font color="#000000">address</font> <font color="#434f54">&lt;</font> <font color="#000000">0x320</font><font color="#000000">)</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#434f54">&#47;&#47; Send the Program Pulses</font>
+<font color="#434f54">&#47;&#47; Need hardware which this example does not have.</font>
+<font color="#000000">}</font>
+<font color="#000000">timeout</font> <font color="#434f54">=</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">100</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Wait for the write to complete</font>
+<font color="#5e6d03">do</font>
+<font color="#000000">{</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x08</font><font color="#434f54">,</font> <font color="#000000">writeFlags</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">!=</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">timeout</font> <font color="#434f54">&lt;</font> <font color="#d35400">millis</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">kEXTENDEDWRITETIMEOUTERROR</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font> <font color="#5e6d03">while</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">writeFlags</font> <font color="#434f54">&amp;</font> <font color="#000000">0x0001</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">0x0001</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* SetProcessorStateToIdle</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Change the processor state to idle</font>
+<font color="#95a5a6">* This is needed to write EEPROM, change ORATE or perform certain self tests</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">SetProcessorStateToIdle</font><font color="#000000">(</font><font color="#00979c">uint8_t</font> <font color="#000000">cs</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">value</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Write the enter idle state command into the control register</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x1F</font><font color="#434f54">,</font> <font color="#000000">0x8046</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">==</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Read the status register to see if the processor is in the idle state</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x22</font><font color="#434f54">,</font> <font color="#000000">value</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">==</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">value</font> <font color="#434f54">&amp;</font> <font color="#000000">0x00FF</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">0x0010</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">kUNABLETOCHANGEPROCESSORSTATE</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* SetProcessorStateToRun</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Change the processor state to run</font>
+<font color="#95a5a6">* This is needed to process angles</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">SetProcessorStateToRun</font><font color="#000000">(</font><font color="#00979c">uint8_t</font> <font color="#000000">cs</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">value</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Write the enter idle state command into the control register</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryWrite</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x1F</font><font color="#434f54">,</font> <font color="#000000">0xC046</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">==</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">1</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Read the status register to see if the processor is in the idle state</font>
+<font color="#000000">results</font> <font color="#434f54">=</font> <font color="#000000">PrimaryRead</font><font color="#000000">(</font><font color="#000000">cs</font><font color="#434f54">,</font> <font color="#000000">0x22</font><font color="#434f54">,</font> <font color="#000000">value</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">results</font> <font color="#434f54">==</font> <font color="#000000">kNOERROR</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">value</font> <font color="#434f54">&amp;</font> <font color="#000000">0x00FF</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">0x0011</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">return</font> <font color="#000000">kUNABLETOCHANGEPROCESSORSTATE</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">return</font> <font color="#000000">results</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* CalculateParity</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* From the 16 bit input, calculate the parity</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">bool</font> <font color="#000000">CalculateParity</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">input</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">count</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+<font color="#434f54">&#47;&#47; Count up the number of 1s in the input</font>
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">index</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">index</font> <font color="#434f54">&lt;</font> <font color="#000000">16</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">index</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">input</font> <font color="#434f54">&amp;</font> <font color="#000000">1</font><font color="#000000">)</font> <font color="#434f54">==</font> <font color="#000000">1</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#434f54">++</font><font color="#000000">count</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#000000">input</font> <font color="#434f54">&gt;&gt;=</font> <font color="#000000">1</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#434f54">&#47;&#47; return true if there is an odd number of 1s</font>
+<font color="#5e6d03">return</font> <font color="#000000">(</font><font color="#000000">count</font> <font color="#434f54">&amp;</font> <font color="#000000">1</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">0</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#95a5a6">&#47;*</font>
+<font color="#95a5a6">* CalculateCRC</font>
+<font color="#95a5a6">*</font>
+<font color="#95a5a6">* Take the 16bit input and generate a 4bit CRC</font>
+<font color="#95a5a6">* Polynomial = x^4 + x^1 + 1</font>
+<font color="#95a5a6">* LFSR preset to all 1’s</font>
+<font color="#95a5a6">*&#47;</font>
+<font color="#00979c">uint8_t</font> <font color="#000000">CalculateCRC</font><font color="#000000">(</font><font color="#00979c">uint16_t</font> <font color="#000000">input</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#00979c">bool</font> <font color="#000000">CRC0</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+<font color="#00979c">bool</font> <font color="#000000">CRC1</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+<font color="#00979c">bool</font> <font color="#000000">CRC2</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+<font color="#00979c">bool</font> <font color="#000000">CRC3</font> <font color="#434f54">=</font> <font color="#00979c">true</font><font color="#000000">;</font>
+<font color="#00979c">int</font> <font color="#000000">i</font><font color="#000000">;</font>
+<font color="#00979c">bool</font> <font color="#000000">DoInvert</font><font color="#000000">;</font>
+<font color="#00979c">uint16_t</font> <font color="#000000">mask</font> <font color="#434f54">=</font> <font color="#000000">0x8000</font><font color="#000000">;</font>
+<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#000000">i</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font> <font color="#000000">i</font> <font color="#434f54">&lt;</font> <font color="#000000">16</font><font color="#000000">;</font> <font color="#434f54">++</font><font color="#000000">i</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+<font color="#000000">DoInvert</font> <font color="#434f54">=</font> <font color="#000000">(</font><font color="#000000">(</font><font color="#000000">input</font> <font color="#434f54">&amp;</font> <font color="#000000">mask</font><font color="#000000">)</font> <font color="#434f54">!=</font> <font color="#000000">0</font><font color="#000000">)</font> <font color="#434f54">^</font> <font color="#000000">CRC3</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; XOR required?</font>
+<font color="#000000">CRC3</font> <font color="#434f54">=</font> <font color="#000000">CRC2</font><font color="#000000">;</font>
+<font color="#000000">CRC2</font> <font color="#434f54">=</font> <font color="#000000">CRC1</font><font color="#000000">;</font>
+<font color="#000000">CRC1</font> <font color="#434f54">=</font> <font color="#000000">CRC0</font> <font color="#434f54">^</font> <font color="#000000">DoInvert</font><font color="#000000">;</font>
+<font color="#000000">CRC0</font> <font color="#434f54">=</font> <font color="#000000">DoInvert</font><font color="#000000">;</font>
+<font color="#000000">mask</font> <font color="#434f54">&gt;&gt;=</font> <font color="#000000">1</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+<font color="#5e6d03">return</font> <font color="#000000">(</font><font color="#000000">CRC3</font> <font color="#434f54">?</font> <font color="#000000">8U</font> <font color="#434f54">:</font> <font color="#000000">0U</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#000000">CRC2</font> <font color="#434f54">?</font> <font color="#000000">4U</font> <font color="#434f54">:</font> <font color="#000000">0U</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#000000">CRC1</font> <font color="#434f54">?</font> <font color="#000000">2U</font> <font color="#434f54">:</font> <font color="#000000">0U</font><font color="#000000">)</font> <font color="#434f54">+</font> <font color="#000000">(</font><font color="#000000">CRC0</font> <font color="#434f54">?</font> <font color="#000000">1U</font> <font color="#434f54">:</font> <font color="#000000">0U</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+</pre>
