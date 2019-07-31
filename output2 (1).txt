@@ -1,0 +1,1543 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 Calculated CRC = \par
+10:38:41.416 -> 13\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 221\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 14\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 238\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 14\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 238\par
+10:38:41.416 -> Device is not Unlocked\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 14\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 238\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 14\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 238\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 8\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 136\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 14\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 238\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 8\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 136\par
+10:38:41.416 -> Unable to read Angle\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 12\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 204\par
+10:38:41.416 -> Unable to read Temperature\par
+10:38:41.416 -> Calculated CRC = \par
+10:38:41.416 -> 3\par
+10:38:41.416 -> crcValue = \par
+10:38:41.416 -> 51\par
+10:38:41.416 -> Unable to read Field Strength\par
+10:38:41.923 -> Calculated CRC = \par
+10:38:41.923 -> 8\par
+10:38:41.923 -> crcValue = \par
+10:38:41.923 -> 136\par
+10:38:41.923 -> Unable to read Angle\par
+10:38:41.923 -> Calculated CRC = \par
+10:38:41.923 -> 12\par
+10:38:41.923 -> crcValue = \par
+10:38:41.923 -> 204\par
+10:38:41.923 -> Unable to read Temperature\par
+10:38:41.923 -> Calculated CRC = \par
+10:38:41.923 -> 3\par
+10:38:41.923 -> crcValue = \par
+10:38:41.923 -> 51\par
+10:38:41.923 -> Unable to read Field Strength\par
+10:38:42.426 -> Calculated CRC = \par
+10:38:42.426 -> 8\par
+10:38:42.426 -> crcValue = \par
+10:38:42.426 -> 136\par
+10:38:42.426 -> Unable to read Angle\par
+10:38:42.426 -> Calculated CRC = \par
+10:38:42.426 -> 12\par
+10:38:42.426 -> crcValue = \par
+10:38:42.426 -> 204\par
+10:38:42.426 -> Unable to read Temperature\par
+10:38:42.426 -> Calculated CRC = \par
+10:38:42.426 -> 1\par
+10:38:42.426 -> crcValue = \par
+10:38:42.426 -> 17\par
+10:38:42.426 -> Unable to read Field Strength\par
+10:38:42.932 -> Calculated CRC = \par
+10:38:42.932 -> 8\par
+10:38:42.932 -> crcValue = \par
+10:38:42.932 -> 136\par
+10:38:42.932 -> Unable to read Angle\par
+10:38:42.932 -> Calculated CRC = \par
+10:38:42.932 -> 9\par
+10:38:42.932 -> crcValue = \par
+10:38:42.932 -> 153\par
+10:38:42.932 -> Unable to read Temperature\par
+10:38:42.932 -> Calculated CRC = \par
+10:38:42.932 -> 2\par
+10:38:42.932 -> crcValue = \par
+10:38:42.932 -> 34\par
+10:38:42.932 -> Unable to read Field Strength\par
+10:38:43.473 -> Calculated CRC = \par
+10:38:43.473 -> 8\par
+10:38:43.473 -> crcValue = \par
+10:38:43.473 -> 136\par
+10:38:43.473 -> Unable to read Angle\par
+10:38:43.473 -> Calculated CRC = \par
+10:38:43.473 -> 9\par
+10:38:43.473 -> crcValue = \par
+10:38:43.473 -> 153\par
+10:38:43.473 -> Unable to read Temperature\par
+10:38:43.473 -> Calculated CRC = \par
+10:38:43.473 -> 1\par
+10:38:43.473 -> crcValue = \par
+10:38:43.473 -> 17\par
+10:38:43.473 -> Unable to read Field Strength\par
+10:38:43.974 -> Calculated CRC = \par
+10:38:43.974 -> 8\par
+10:38:43.974 -> crcValue = \par
+10:38:43.974 -> 136\par
+10:38:43.974 -> Unable to read Angle\par
+10:38:43.974 -> Calculated CRC = \par
+10:38:43.974 -> 12\par
+10:38:43.974 -> crcValue = \par
+10:38:43.974 -> 204\par
+10:38:43.974 -> Unable to read Temperature\par
+10:38:43.974 -> Calculated CRC = \par
+10:38:43.974 -> 2\par
+10:38:43.974 -> crcValue = \par
+10:38:43.974 -> 34\par
+10:38:43.974 -> Unable to read Field Strength\par
+10:38:44.489 -> Calculated CRC = \par
+10:38:44.489 -> 8\par
+10:38:44.489 -> crcValue = \par
+10:38:44.489 -> 136\par
+10:38:44.489 -> Unable to read Angle\par
+10:38:44.489 -> Calculated CRC = \par
+10:38:44.489 -> 9\par
+10:38:44.489 -> crcValue = \par
+10:38:44.489 -> 153\par
+10:38:44.489 -> Unable to read Temperature\par
+10:38:44.489 -> Calculated CRC = \par
+10:38:44.489 -> 2\par
+10:38:44.489 -> crcValue = \par
+10:38:44.489 -> 34\par
+10:38:44.489 -> Unable to read Field Strength\par
+10:38:44.992 -> Calculated CRC = \par
+10:38:44.992 -> 8\par
+10:38:44.992 -> crcValue = \par
+10:38:44.992 -> 136\par
+10:38:44.992 -> Unable to read Angle\par
+10:38:44.992 -> Calculated CRC = \par
+10:38:44.992 -> 12\par
+10:38:44.992 -> crcValue = \par
+10:38:44.992 -> 204\par
+10:38:44.992 -> Unable to read Temperature\par
+10:38:44.992 -> Calculated CRC = \par
+10:38:44.992 -> 1\par
+10:38:44.992 -> crcValue = \par
+10:38:44.992 -> 17\par
+10:38:44.992 -> Unable to read Field Strength\par
+10:38:45.497 -> Calculated CRC = \par
+10:38:45.497 -> 8\par
+10:38:45.497 -> crcValue = \par
+10:38:45.497 -> 136\par
+10:38:45.497 -> Unable to read Angle\par
+10:38:45.497 -> Calculated CRC = \par
+10:38:45.497 -> 9\par
+10:38:45.497 -> crcValue = \par
+10:38:45.497 -> 153\par
+10:38:45.497 -> Unable to read Temperature\par
+10:38:45.497 -> Calculated CRC = \par
+10:38:45.497 -> 2\par
+10:38:45.497 -> crcValue = \par
+10:38:45.497 -> 34\par
+10:38:45.497 -> Unable to read Field Strength\par
+10:38:46.003 -> Calculated CRC = \par
+10:38:46.003 -> 8\par
+10:38:46.003 -> crcValue = \par
+10:38:46.003 -> 136\par
+10:38:46.003 -> Unable to read Angle\par
+10:38:46.003 -> Calculated CRC = \par
+10:38:46.003 -> 9\par
+10:38:46.003 -> crcValue = \par
+10:38:46.003 -> 153\par
+10:38:46.003 -> Unable to read Temperature\par
+10:38:46.003 -> Calculated CRC = \par
+10:38:46.003 -> 2\par
+10:38:46.003 -> crcValue = \par
+10:38:46.003 -> 34\par
+10:38:46.003 -> Unable to read Field Strength\par
+10:38:46.540 -> Calculated CRC = \par
+10:38:46.540 -> 8\par
+10:38:46.540 -> crcValue = \par
+10:38:46.540 -> 136\par
+10:38:46.540 -> Unable to read Angle\par
+10:38:46.540 -> Calculated CRC = \par
+10:38:46.540 -> 9\par
+10:38:46.540 -> crcValue = \par
+10:38:46.540 -> 153\par
+10:38:46.540 -> Unable to read Temperature\par
+10:38:46.540 -> Calculated CRC = \par
+10:38:46.540 -> 1\par
+10:38:46.540 -> crcValue = \par
+10:38:46.540 -> 17\par
+10:38:46.540 -> Unable to read Field Strength\par
+10:38:47.043 -> Calculated CRC = \par
+10:38:47.043 -> 8\par
+10:38:47.043 -> crcValue = \par
+10:38:47.043 -> 136\par
+10:38:47.043 -> Unable to read Angle\par
+10:38:47.043 -> Calculated CRC = \par
+10:38:47.043 -> 9\par
+10:38:47.043 -> crcValue = \par
+10:38:47.043 -> 153\par
+10:38:47.043 -> Unable to read Temperature\par
+10:38:47.043 -> Calculated CRC = \par
+10:38:47.043 -> 1\par
+10:38:47.043 -> crcValue = \par
+10:38:47.043 -> 17\par
+10:38:47.043 -> Unable to read Field Strength\par
+10:38:47.546 -> Calculated CRC = \par
+10:38:47.546 -> 8\par
+10:38:47.546 -> crcValue = \par
+10:38:47.546 -> 136\par
+10:38:47.546 -> Unable to read Angle\par
+10:38:47.546 -> Calculated CRC = \par
+10:38:47.546 -> 9\par
+10:38:47.546 -> crcValue = \par
+10:38:47.546 -> 153\par
+10:38:47.546 -> Unable to read Temperature\par
+10:38:47.546 -> Calculated CRC = \par
+10:38:47.546 -> 2\par
+10:38:47.546 -> crcValue = \par
+10:38:47.546 -> 34\par
+10:38:47.546 -> Unable to read Field Strength\par
+10:38:48.083 -> Calculated CRC = \par
+10:38:48.083 -> 8\par
+10:38:48.083 -> crcValue = \par
+10:38:48.083 -> 136\par
+10:38:48.083 -> Unable to read Angle\par
+10:38:48.083 -> Calculated CRC = \par
+10:38:48.083 -> 9\par
+10:38:48.083 -> crcValue = \par
+10:38:48.083 -> 153\par
+10:38:48.083 -> Unable to read Temperature\par
+10:38:48.083 -> Calculated CRC = \par
+10:38:48.083 -> 2\par
+10:38:48.083 -> crcValue = \par
+10:38:48.083 -> 34\par
+10:38:48.083 -> Unable to read Field Strength\par
+10:38:48.588 -> Calculated CRC = \par
+10:38:48.588 -> 8\par
+10:38:48.588 -> crcValue = \par
+10:38:48.588 -> 136\par
+10:38:48.588 -> Unable to read Angle\par
+10:38:48.588 -> Calculated CRC = \par
+10:38:48.588 -> 9\par
+10:38:48.588 -> crcValue = \par
+10:38:48.588 -> 153\par
+10:38:48.588 -> Unable to read Temperature\par
+10:38:48.588 -> Calculated CRC = \par
+10:38:48.588 -> 1\par
+10:38:48.588 -> crcValue = \par
+10:38:48.588 -> 17\par
+10:38:48.588 -> Unable to read Field Strength\par
+10:38:49.093 -> Calculated CRC = \par
+10:38:49.093 -> 8\par
+10:38:49.093 -> crcValue = \par
+10:38:49.093 -> 136\par
+10:38:49.093 -> Unable to read Angle\par
+10:38:49.093 -> Calculated CRC = \par
+10:38:49.093 -> 12\par
+10:38:49.093 -> crcValue = \par
+10:38:49.093 -> 204\par
+10:38:49.093 -> Unable to read Temperature\par
+10:38:49.093 -> Calculated CRC = \par
+10:38:49.093 -> 2\par
+10:38:49.093 -> crcValue = \par
+10:38:49.093 -> 34\par
+10:38:49.093 -> Unable to read Field Strength\par
+10:38:49.606 -> Calculated CRC = \par
+10:38:49.606 -> 8\par
+10:38:49.606 -> crcValue = \par
+10:38:49.606 -> 136\par
+10:38:49.606 -> Unable to read Angle\par
+10:38:49.606 -> Calculated CRC = \par
+10:38:49.606 -> 9\par
+10:38:49.606 -> crcValue = \par
+10:38:49.606 -> 153\par
+10:38:49.606 -> Unable to read Temperature\par
+10:38:49.606 -> Calculated CRC = \par
+10:38:49.606 -> 2\par
+10:38:49.606 -> crcValue = \par
+10:38:49.606 -> 34\par
+10:38:49.606 -> Unable to read Field Strength\par
+10:38:50.114 -> Calculated CRC = \par
+10:38:50.114 -> 8\par
+10:38:50.114 -> crcValue = \par
+10:38:50.114 -> 136\par
+10:38:50.114 -> Unable to read Angle\par
+10:38:50.114 -> Calculated CRC = \par
+10:38:50.114 -> 9\par
+10:38:50.114 -> crcValue = \par
+10:38:50.114 -> 153\par
+10:38:50.114 -> Unable to read Temperature\par
+10:38:50.114 -> Calculated CRC = \par
+10:38:50.114 -> 1\par
+10:38:50.114 -> crcValue = \par
+10:38:50.114 -> 17\par
+10:38:50.114 -> Unable to read Field Strength\par
+10:38:50.620 -> Calculated CRC = \par
+10:38:50.620 -> 8\par
+10:38:50.620 -> crcValue = \par
+10:38:50.620 -> 136\par
+10:38:50.620 -> Unable to read Angle\par
+10:38:50.620 -> Calculated CRC = \par
+10:38:50.620 -> 9\par
+10:38:50.620 -> crcValue = \par
+10:38:50.620 -> 153\par
+10:38:50.620 -> Unable to read Temperature\par
+10:38:50.620 -> Calculated CRC = \par
+10:38:50.620 -> 2\par
+10:38:50.620 -> crcValue = \par
+10:38:50.620 -> 34\par
+10:38:50.620 -> Unable to read Field Strength\par
+10:38:51.128 -> Calculated CRC = \par
+10:38:51.128 -> 8\par
+10:38:51.128 -> crcValue = \par
+10:38:51.128 -> 136\par
+10:38:51.128 -> Unable to read Angle\par
+10:38:51.128 -> Calculated CRC = \par
+10:38:51.128 -> 9\par
+10:38:51.128 -> crcValue = \par
+10:38:51.128 -> 153\par
+10:38:51.128 -> Unable to read Temperature\par
+10:38:51.128 -> Calculated CRC = \par
+10:38:51.128 -> 1\par
+10:38:51.128 -> crcValue = \par
+10:38:51.128 -> 17\par
+10:38:51.128 -> Unable to read Field Strength\par
+10:38:51.636 -> Calculated CRC = \par
+10:38:51.636 -> 8\par
+10:38:51.636 -> crcValue = \par
+10:38:51.636 -> 136\par
+10:38:51.636 -> Unable to read Angle\par
+10:38:51.636 -> Calculated CRC = \par
+10:38:51.636 -> 12\par
+10:38:51.636 -> crcValue = \par
+10:38:51.636 -> 204\par
+10:38:51.636 -> Unable to read Temperature\par
+10:38:51.636 -> Calculated CRC = \par
+10:38:51.636 -> 1\par
+10:38:51.636 -> crcValue = \par
+10:38:51.636 -> 17\par
+10:38:51.636 -> Unable to read Field Strength\par
+10:38:52.171 -> Calculated CRC = \par
+10:38:52.171 -> 8\par
+10:38:52.171 -> crcValue = \par
+10:38:52.171 -> 136\par
+10:38:52.171 -> Unable to read Angle\par
+10:38:52.171 -> Calculated CRC = \par
+10:38:52.171 -> 9\par
+10:38:52.171 -> crcValue = \par
+10:38:52.171 -> 153\par
+10:38:52.171 -> Unable to read Temperature\par
+10:38:52.171 -> Calculated CRC = \par
+10:38:52.171 -> 1\par
+10:38:52.171 -> crcValue = \par
+10:38:52.171 -> 17\par
+10:38:52.171 -> Unable to read Field Strength\par
+10:38:52.681 -> Calculated CRC = \par
+10:38:52.681 -> 8\par
+10:38:52.681 -> crcValue = \par
+10:38:52.681 -> 136\par
+10:38:52.681 -> Unable to read Angle\par
+10:38:52.681 -> Calculated CRC = \par
+10:38:52.681 -> 9\par
+10:38:52.681 -> crcValue = \par
+10:38:52.681 -> 153\par
+10:38:52.681 -> Unable to read Temperature\par
+10:38:52.681 -> Calculated CRC = \par
+10:38:52.681 -> 1\par
+10:38:52.681 -> crcValue = \par
+10:38:52.681 -> 17\par
+10:38:52.681 -> Unable to read Field Strength\par
+10:38:53.184 -> Calculated CRC = \par
+10:38:53.184 -> 8\par
+10:38:53.184 -> crcValue = \par
+10:38:53.184 -> 136\par
+10:38:53.184 -> Unable to read Angle\par
+10:38:53.184 -> Calculated CRC = \par
+10:38:53.184 -> 9\par
+10:38:53.184 -> crcValue = \par
+10:38:53.184 -> 153\par
+10:38:53.184 -> Unable to read Temperature\par
+10:38:53.184 -> Calculated CRC = \par
+10:38:53.184 -> 1\par
+10:38:53.184 -> crcValue = \par
+10:38:53.184 -> 17\par
+10:38:53.184 -> Unable to read Field Strength\par
+10:38:53.688 -> Calculated CRC = \par
+10:38:53.688 -> 8\par
+10:38:53.688 -> crcValue = \par
+10:38:53.688 -> 136\par
+10:38:53.688 -> Unable to read Angle\par
+10:38:53.688 -> Calculated CRC = \par
+10:38:53.688 -> 12\par
+10:38:53.688 -> crcValue = \par
+10:38:53.688 -> 204\par
+10:38:53.688 -> Unable to read Temperature\par
+10:38:53.688 -> Calculated CRC = \par
+10:38:53.688 -> 1\par
+10:38:53.688 -> crcValue = \par
+10:38:53.688 -> 17\par
+10:38:53.688 -> Unable to read Field Strength\par
+10:38:54.193 -> Calculated CRC = \par
+10:38:54.193 -> 8\par
+10:38:54.193 -> crcValue = \par
+10:38:54.193 -> 136\par
+10:38:54.193 -> Unable to read Angle\par
+10:38:54.193 -> Calculated CRC = \par
+10:38:54.193 -> 9\par
+10:38:54.193 -> crcValue = \par
+10:38:54.193 -> 153\par
+10:38:54.193 -> Unable to read Temperature\par
+10:38:54.193 -> Calculated CRC = \par
+10:38:54.193 -> 1\par
+10:38:54.193 -> crcValue = \par
+10:38:54.193 -> 17\par
+10:38:54.193 -> Unable to read Field Strength\par
+10:38:54.708 -> Calculated CRC = \par
+10:38:54.708 -> 8\par
+10:38:54.708 -> crcValue = \par
+10:38:54.708 -> 136\par
+10:38:54.708 -> Unable to read Angle\par
+10:38:54.708 -> Calculated CRC = \par
+10:38:54.708 -> 9\par
+10:38:54.708 -> crcValue = \par
+10:38:54.708 -> 153\par
+10:38:54.708 -> Unable to read Temperature\par
+10:38:54.708 -> Calculated CRC = \par
+10:38:54.708 -> 1\par
+10:38:54.708 -> crcValue = \par
+10:38:54.708 -> 17\par
+10:38:54.708 -> Unable to read Field Strength\par
+10:38:55.247 -> Calculated CRC = \par
+10:38:55.247 -> 8\par
+10:38:55.247 -> crcValue = \par
+10:38:55.247 -> 136\par
+10:38:55.247 -> Unable to read Angle\par
+10:38:55.247 -> Calculated CRC = \par
+10:38:55.247 -> 9\par
+10:38:55.247 -> crcValue = \par
+10:38:55.247 -> 153\par
+10:38:55.247 -> Unable to read Temperature\par
+10:38:55.247 -> Calculated CRC = \par
+10:38:55.247 -> 1\par
+10:38:55.247 -> crcValue = \par
+10:38:55.247 -> 17\par
+10:38:55.247 -> Unable to read Field Strength\par
+10:38:55.755 -> Calculated CRC = \par
+10:38:55.755 -> 8\par
+10:38:55.755 -> crcValue = \par
+10:38:55.755 -> 136\par
+10:38:55.755 -> Unable to read Angle\par
+10:38:55.755 -> Calculated CRC = \par
+10:38:55.755 -> 12\par
+10:38:55.755 -> crcValue = \par
+10:38:55.755 -> 204\par
+10:38:55.755 -> Unable to read Temperature\par
+10:38:55.755 -> Calculated CRC = \par
+10:38:55.755 -> 2\par
+10:38:55.755 -> crcValue = \par
+10:38:55.755 -> 34\par
+10:38:55.755 -> Unable to read Field Strength\par
+10:38:56.262 -> Calculated CRC = \par
+10:38:56.262 -> 8\par
+10:38:56.262 -> crcValue = \par
+10:38:56.262 -> 136\par
+10:38:56.262 -> Unable to read Angle\par
+10:38:56.262 -> Calculated CRC = \par
+10:38:56.262 -> 9\par
+10:38:56.262 -> crcValue = \par
+10:38:56.262 -> 153\par
+10:38:56.262 -> Unable to read Temperature\par
+10:38:56.262 -> Calculated CRC = \par
+10:38:56.262 -> 1\par
+10:38:56.262 -> crcValue = \par
+10:38:56.262 -> 17\par
+10:38:56.262 -> Unable to read Field Strength\par
+10:38:56.766 -> Calculated CRC = \par
+10:38:56.766 -> 8\par
+10:38:56.766 -> crcValue = \par
+10:38:56.766 -> 136\par
+10:38:56.766 -> Unable to read Angle\par
+10:38:56.766 -> Calculated CRC = \par
+10:38:56.766 -> 9\par
+10:38:56.766 -> crcValue = \par
+10:38:56.766 -> 153\par
+10:38:56.766 -> Unable to read Temperature\par
+10:38:56.766 -> Calculated CRC = \par
+10:38:56.766 -> 3\par
+10:38:56.766 -> crcValue = \par
+10:38:56.766 -> 51\par
+10:38:56.766 -> Unable to read Field Strength\par
+10:38:57.271 -> Calculated CRC = \par
+10:38:57.271 -> 8\par
+10:38:57.271 -> crcValue = \par
+10:38:57.271 -> 136\par
+10:38:57.271 -> Unable to read Angle\par
+10:38:57.271 -> Calculated CRC = \par
+10:38:57.271 -> 9\par
+10:38:57.271 -> crcValue = \par
+10:38:57.271 -> 153\par
+10:38:57.271 -> Unable to read Temperature\par
+10:38:57.271 -> Calculated CRC = \par
+10:38:57.271 -> 1\par
+10:38:57.271 -> crcValue = \par
+10:38:57.271 -> 17\par
+10:38:57.271 -> Unable to read Field Strength\par
+10:38:57.810 -> Calculated CRC = \par
+10:38:57.810 -> 8\par
+10:38:57.810 -> crcValue = \par
+10:38:57.810 -> 136\par
+10:38:57.810 -> Unable to read Angle\par
+10:38:57.810 -> Calculated CRC = \par
+10:38:57.810 -> 9\par
+10:38:57.810 -> crcValue = \par
+10:38:57.810 -> 153\par
+10:38:57.810 -> Unable to read Temperature\par
+10:38:57.810 -> Calculated CRC = \par
+10:38:57.810 -> 2\par
+10:38:57.810 -> crcValue = \par
+10:38:57.810 -> 34\par
+10:38:57.810 -> Unable to read Field Strength\par
+10:38:58.314 -> Calculated CRC = \par
+10:38:58.314 -> 8\par
+10:38:58.314 -> crcValue = \par
+10:38:58.314 -> 136\par
+10:38:58.314 -> Unable to read Angle\par
+10:38:58.314 -> Calculated CRC = \par
+10:38:58.314 -> 9\par
+10:38:58.314 -> crcValue = \par
+10:38:58.314 -> 153\par
+10:38:58.314 -> Unable to read Temperature\par
+10:38:58.314 -> Calculated CRC = \par
+10:38:58.314 -> 1\par
+10:38:58.314 -> crcValue = \par
+10:38:58.314 -> 17\par
+10:38:58.314 -> Unable to read Field Strength\par
+10:38:58.821 -> Calculated CRC = \par
+10:38:58.821 -> 8\par
+10:38:58.821 -> crcValue = \par
+10:38:58.821 -> 136\par
+10:38:58.821 -> Unable to read Angle\par
+10:38:58.821 -> Calculated CRC = \par
+10:38:58.821 -> 9\par
+10:38:58.821 -> crcValue = \par
+10:38:58.821 -> 153\par
+10:38:58.821 -> Unable to read Temperature\par
+10:38:58.821 -> Calculated CRC = \par
+10:38:58.821 -> 2\par
+10:38:58.821 -> crcValue = \par
+10:38:58.821 -> 34\par
+10:38:58.821 -> Unable to read Field Strength\par
+10:38:59.331 -> Calculated CRC = \par
+10:38:59.331 -> 8\par
+10:38:59.331 -> crcValue = \par
+10:38:59.331 -> 136\par
+10:38:59.331 -> Unable to read Angle\par
+10:38:59.331 -> Calculated CRC = \par
+10:38:59.331 -> 12\par
+10:38:59.331 -> crcValue = \par
+10:38:59.331 -> 204\par
+10:38:59.331 -> Unable to read Temperature\par
+10:38:59.331 -> Calculated CRC = \par
+10:38:59.331 -> 1\par
+10:38:59.331 -> crcValue = \par
+10:38:59.331 -> 17\par
+10:38:59.331 -> Unable to read Field Strength\par
+10:38:59.836 -> Calculated CRC = \par
+10:38:59.836 -> 8\par
+10:38:59.836 -> crcValue = \par
+10:38:59.836 -> 136\par
+10:38:59.836 -> Unable to read Angle\par
+10:38:59.836 -> Calculated CRC = \par
+10:38:59.836 -> 12\par
+10:38:59.836 -> crcValue = \par
+10:38:59.836 -> 204\par
+10:38:59.836 -> Unable to read Temperature\par
+10:38:59.836 -> Calculated CRC = \par
+10:38:59.836 -> 1\par
+10:38:59.836 -> crcValue = \par
+10:38:59.836 -> 17\par
+10:38:59.836 -> Unable to read Field Strength\par
+10:39:00.345 -> Calculated CRC = \par
+10:39:00.345 -> 8\par
+10:39:00.345 -> crcValue = \par
+10:39:00.345 -> 136\par
+10:39:00.345 -> Unable to read Angle\par
+10:39:00.345 -> Calculated CRC = \par
+10:39:00.345 -> 9\par
+10:39:00.345 -> crcValue = \par
+10:39:00.345 -> 153\par
+10:39:00.345 -> Unable to read Temperature\par
+10:39:00.345 -> Calculated CRC = \par
+10:39:00.345 -> 1\par
+10:39:00.345 -> crcValue = \par
+10:39:00.345 -> 17\par
+10:39:00.345 -> Unable to read Field Strength\par
+10:39:00.851 -> Calculated CRC = \par
+10:39:00.851 -> 8\par
+10:39:00.851 -> crcValue = \par
+10:39:00.851 -> 136\par
+10:39:00.851 -> Unable to read Angle\par
+10:39:00.851 -> Calculated CRC = \par
+10:39:00.851 -> 12\par
+10:39:00.851 -> crcValue = \par
+10:39:00.851 -> 204\par
+10:39:00.851 -> Unable to read Temperature\par
+10:39:00.851 -> Field Strength = 1733Gauss\par
+10:39:01.388 -> Calculated CRC = \par
+10:39:01.388 -> 8\par
+10:39:01.388 -> crcValue = \par
+10:39:01.388 -> 136\par
+10:39:01.388 -> Unable to read Angle\par
+10:39:01.388 -> Calculated CRC = \par
+10:39:01.388 -> 9\par
+10:39:01.388 -> crcValue = \par
+10:39:01.388 -> 153\par
+10:39:01.388 -> Unable to read Temperature\par
+10:39:01.388 -> Calculated CRC = \par
+10:39:01.388 -> 3\par
+10:39:01.388 -> crcValue = \par
+10:39:01.388 -> 51\par
+10:39:01.388 -> Unable to read Field Strength\par
+10:39:01.895 -> Calculated CRC = \par
+10:39:01.895 -> 8\par
+10:39:01.895 -> crcValue = \par
+10:39:01.895 -> 136\par
+10:39:01.895 -> Unable to read Angle\par
+10:39:01.895 -> Calculated CRC = \par
+10:39:01.895 -> 9\par
+10:39:01.895 -> crcValue = \par
+10:39:01.895 -> 153\par
+10:39:01.895 -> Unable to read Temperature\par
+10:39:01.895 -> Calculated CRC = \par
+10:39:01.895 -> 15\par
+10:39:01.895 -> crcValue = \par
+10:39:01.895 -> 255\par
+10:39:01.895 -> Unable to read Field Strength\par
+10:39:02.400 -> Calculated CRC = \par
+10:39:02.400 -> 8\par
+10:39:02.400 -> crcValue = \par
+10:39:02.400 -> 136\par
+10:39:02.400 -> Unable to read Angle\par
+10:39:02.400 -> Calculated CRC = \par
+10:39:02.400 -> 9\par
+10:39:02.400 -> crcValue = \par
+10:39:02.400 -> 153\par
+10:39:02.400 -> Unable to read Temperature\par
+10:39:02.400 -> Calculated CRC = \par
+10:39:02.400 -> 2\par
+10:39:02.400 -> crcValue = \par
+10:39:02.400 -> 34\par
+10:39:02.400 -> Unable to read Field Strength\par
+10:39:02.906 -> Calculated CRC = \par
+10:39:02.906 -> 8\par
+10:39:02.906 -> crcValue = \par
+10:39:02.906 -> 136\par
+10:39:02.906 -> Unable to read Angle\par
+10:39:02.906 -> Calculated CRC = \par
+10:39:02.906 -> 9\par
+10:39:02.906 -> crcValue = \par
+10:39:02.906 -> 153\par
+10:39:02.906 -> Unable to read Temperature\par
+10:39:02.906 -> Calculated CRC = \par
+10:39:02.906 -> 6\par
+10:39:02.906 -> crcValue = \par
+10:39:02.906 -> 102\par
+10:39:02.906 -> Unable to read Field Strength\par
+10:39:03.409 -> Calculated CRC = \par
+10:39:03.409 -> 8\par
+10:39:03.409 -> crcValue = \par
+10:39:03.409 -> 136\par
+10:39:03.409 -> Unable to read Angle\par
+10:39:03.409 -> Calculated CRC = \par
+10:39:03.409 -> 9\par
+10:39:03.409 -> crcValue = \par
+10:39:03.409 -> 153\par
+10:39:03.409 -> Unable to read Temperature\par
+10:39:03.409 -> Calculated CRC = \par
+10:39:03.409 -> 2\par
+10:39:03.409 -> crcValue = \par
+10:39:03.409 -> 34\par
+10:39:03.409 -> Unable to read Field Strength\par
+10:39:03.946 -> Calculated CRC = \par
+10:39:03.946 -> 8\par
+10:39:03.946 -> crcValue = \par
+10:39:03.946 -> 136\par
+10:39:03.946 -> Unable to read Angle\par
+10:39:03.946 -> Calculated CRC = \par
+10:39:03.946 -> 9\par
+10:39:03.946 -> crcValue = \par
+10:39:03.946 -> 153\par
+10:39:03.946 -> Unable to read Temperature\par
+10:39:03.946 -> Calculated CRC = \par
+10:39:03.946 -> 10\par
+10:39:03.946 -> crcValue = \par
+10:39:03.946 -> 170\par
+10:39:03.946 -> Unable to read Field Strength\par
+10:39:04.457 -> Calculated CRC = \par
+10:39:04.457 -> 8\par
+10:39:04.457 -> crcValue = \par
+10:39:04.457 -> 136\par
+10:39:04.457 -> Unable to read Angle\par
+10:39:04.457 -> Calculated CRC = \par
+10:39:04.457 -> 9\par
+10:39:04.457 -> crcValue = \par
+10:39:04.457 -> 153\par
+10:39:04.457 -> Unable to read Temperature\par
+10:39:04.457 -> Calculated CRC = \par
+10:39:04.457 -> 1\par
+10:39:04.457 -> crcValue = \par
+10:39:04.457 -> 17\par
+10:39:04.457 -> Unable to read Field Strength\par
+10:39:04.963 -> Calculated CRC = \par
+10:39:04.963 -> 8\par
+10:39:04.963 -> crcValue = \par
+10:39:04.963 -> 136\par
+10:39:04.963 -> Unable to read Angle\par
+10:39:04.963 -> Calculated CRC = \par
+10:39:04.963 -> 9\par
+10:39:04.963 -> crcValue = \par
+10:39:04.963 -> 153\par
+10:39:04.963 -> Unable to read Temperature\par
+10:39:04.963 -> Calculated CRC = \par
+10:39:04.963 -> 10\par
+10:39:04.963 -> crcValue = \par
+10:39:04.963 -> 170\par
+10:39:04.963 -> Unable to read Field Strength\par
+10:39:05.469 -> Calculated CRC = \par
+10:39:05.469 -> 8\par
+10:39:05.469 -> crcValue = \par
+10:39:05.469 -> 136\par
+10:39:05.469 -> Unable to read Angle\par
+10:39:05.469 -> Calculated CRC = \par
+10:39:05.469 -> 9\par
+10:39:05.469 -> crcValue = \par
+10:39:05.469 -> 153\par
+10:39:05.469 -> Unable to read Temperature\par
+10:39:05.469 -> Calculated CRC = \par
+10:39:05.469 -> 3\par
+10:39:05.469 -> crcValue = \par
+10:39:05.469 -> 51\par
+10:39:05.469 -> Unable to read Field Strength\par
+10:39:05.970 -> Calculated CRC = \par
+10:39:05.970 -> 8\par
+10:39:05.970 -> crcValue = \par
+10:39:05.970 -> 136\par
+10:39:05.970 -> Unable to read Angle\par
+10:39:05.970 -> Calculated CRC = \par
+10:39:05.970 -> 9\par
+10:39:05.970 -> crcValue = \par
+10:39:05.970 -> 153\par
+10:39:05.970 -> Unable to read Temperature\par
+10:39:05.970 -> Calculated CRC = \par
+10:39:05.970 -> 4\par
+10:39:05.970 -> crcValue = \par
+10:39:05.970 -> 68\par
+10:39:05.970 -> Unable to read Field Strength\par
+10:39:06.481 -> Calculated CRC = \par
+10:39:06.481 -> 8\par
+10:39:06.481 -> crcValue = \par
+10:39:06.481 -> 136\par
+10:39:06.481 -> Unable to read Angle\par
+10:39:06.481 -> Calculated CRC = \par
+10:39:06.481 -> 9\par
+10:39:06.481 -> crcValue = \par
+10:39:06.481 -> 153\par
+10:39:06.481 -> Unable to read Temperature\par
+10:39:06.481 -> Calculated CRC = \par
+10:39:06.481 -> 15\par
+10:39:06.481 -> crcValue = \par
+10:39:06.481 -> 255\par
+10:39:06.481 -> Unable to read Field Strength\par
+10:39:07.017 -> Calculated CRC = \par
+10:39:07.017 -> 8\par
+10:39:07.017 -> crcValue = \par
+10:39:07.017 -> 136\par
+10:39:07.017 -> Unable to read Angle\par
+10:39:07.017 -> Calculated CRC = \par
+10:39:07.017 -> 9\par
+10:39:07.017 -> crcValue = \par
+10:39:07.017 -> 153\par
+10:39:07.017 -> Unable to read Temperature\par
+10:39:07.017 -> Calculated CRC = \par
+10:39:07.017 -> 4\par
+10:39:07.017 -> crcValue = \par
+10:39:07.017 -> 68\par
+10:39:07.017 -> Unable to read Field Strength\par
+10:39:07.521 -> Calculated CRC = \par
+10:39:07.521 -> 8\par
+10:39:07.521 -> crcValue = \par
+10:39:07.521 -> 136\par
+10:39:07.521 -> Unable to read Angle\par
+10:39:07.521 -> Calculated CRC = \par
+10:39:07.521 -> 9\par
+10:39:07.521 -> crcValue = \par
+10:39:07.521 -> 153\par
+10:39:07.521 -> Unable to read Temperature\par
+10:39:07.521 -> Calculated CRC = \par
+10:39:07.521 -> 1\par
+10:39:07.521 -> crcValue = \par
+10:39:07.521 -> 17\par
+10:39:07.521 -> Unable to read Field Strength\par
+10:39:08.028 -> Calculated CRC = \par
+10:39:08.028 -> 8\par
+10:39:08.028 -> crcValue = \par
+10:39:08.028 -> 136\par
+10:39:08.028 -> Unable to read Angle\par
+10:39:08.028 -> Calculated CRC = \par
+10:39:08.028 -> 9\par
+10:39:08.028 -> crcValue = \par
+10:39:08.028 -> 153\par
+10:39:08.028 -> Unable to read Temperature\par
+10:39:08.028 -> Calculated CRC = \par
+10:39:08.028 -> 2\par
+10:39:08.028 -> crcValue = \par
+10:39:08.028 -> 34\par
+10:39:08.028 -> Unable to read Field Strength\par
+10:39:08.532 -> Calculated CRC = \par
+10:39:08.532 -> 8\par
+10:39:08.532 -> crcValue = \par
+10:39:08.532 -> 136\par
+10:39:08.532 -> Unable to read Angle\par
+10:39:08.532 -> Calculated CRC = \par
+10:39:08.532 -> 9\par
+10:39:08.532 -> crcValue = \par
+10:39:08.532 -> 153\par
+10:39:08.532 -> Unable to read Temperature\par
+10:39:08.532 -> Calculated CRC = \par
+10:39:08.532 -> 1\par
+10:39:08.532 -> crcValue = \par
+10:39:08.532 -> 17\par
+10:39:08.532 -> Unable to read Field Strength\par
+10:39:09.037 -> Calculated CRC = \par
+10:39:09.037 -> 8\par
+10:39:09.037 -> crcValue = \par
+10:39:09.037 -> 136\par
+10:39:09.037 -> Unable to read Angle\par
+10:39:09.037 -> Calculated CRC = \par
+10:39:09.037 -> 12\par
+10:39:09.037 -> crcValue = \par
+10:39:09.037 -> 204\par
+10:39:09.037 -> Unable to read Temperature\par
+10:39:09.037 -> Calculated CRC = \par
+10:39:09.037 -> 11\par
+10:39:09.037 -> crcValue = \par
+10:39:09.037 -> 187\par
+10:39:09.037 -> Unable to read Field Strength\par
+10:39:09.579 -> Calculated CRC = \par
+10:39:09.579 -> 8\par
+10:39:09.579 -> crcValue = \par
+10:39:09.579 -> 136\par
+10:39:09.579 -> Unable to read Angle\par
+10:39:09.579 -> Calculated CRC = \par
+10:39:09.579 -> 9\par
+10:39:09.579 -> crcValue = \par
+10:39:09.579 -> 153\par
+10:39:09.579 -> Unable to read Temperature\par
+10:39:09.579 -> Calculated CRC = \par
+10:39:09.579 -> 6\par
+10:39:09.579 -> crcValue = \par
+10:39:09.579 -> 102\par
+10:39:09.579 -> Unable to read Field Strength\par
+10:39:10.082 -> Calculated CRC = \par
+10:39:10.082 -> 8\par
+10:39:10.082 -> crcValue = \par
+10:39:10.082 -> 136\par
+10:39:10.082 -> Unable to read Angle\par
+10:39:10.082 -> Calculated CRC = \par
+10:39:10.082 -> 9\par
+10:39:10.082 -> crcValue = \par
+10:39:10.082 -> 153\par
+10:39:10.082 -> Unable to read Temperature\par
+10:39:10.082 -> Calculated CRC = \par
+10:39:10.082 -> 11\par
+10:39:10.082 -> crcValue = \par
+10:39:10.082 -> 187\par
+10:39:10.082 -> Unable to read Field Strength\par
+10:39:10.587 -> Calculated CRC = \par
+10:39:10.587 -> 8\par
+10:39:10.587 -> crcValue = \par
+10:39:10.587 -> 136\par
+10:39:10.587 -> Unable to read Angle\par
+10:39:10.587 -> Calculated CRC = \par
+10:39:10.587 -> 9\par
+10:39:10.587 -> crcValue = \par
+10:39:10.587 -> 153\par
+10:39:10.587 -> Unable to read Temperature\par
+10:39:10.587 -> Calculated CRC = \par
+10:39:10.587 -> 11\par
+10:39:10.587 -> crcValue = \par
+10:39:10.587 -> 187\par
+10:39:10.587 -> Unable to read Field Strength\par
+10:39:11.093 -> Calculated CRC = \par
+10:39:11.093 -> 8\par
+10:39:11.093 -> crcValue = \par
+10:39:11.093 -> 136\par
+10:39:11.093 -> Unable to read Angle\par
+10:39:11.093 -> Calculated CRC = \par
+10:39:11.093 -> 9\par
+10:39:11.093 -> crcValue = \par
+10:39:11.093 -> 153\par
+10:39:11.093 -> Unable to read Temperature\par
+10:39:11.093 -> Calculated CRC = \par
+10:39:11.093 -> 6\par
+10:39:11.093 -> crcValue = \par
+10:39:11.093 -> 102\par
+10:39:11.093 -> Unable to read Field Strength\par
+10:39:11.599 -> Calculated CRC = \par
+10:39:11.599 -> 8\par
+10:39:11.599 -> crcValue = \par
+10:39:11.599 -> 136\par
+10:39:11.599 -> Unable to read Angle\par
+10:39:11.599 -> Calculated CRC = \par
+10:39:11.599 -> 9\par
+10:39:11.599 -> crcValue = \par
+10:39:11.599 -> 153\par
+10:39:11.599 -> Unable to read Temperature\par
+10:39:11.599 -> Calculated CRC = \par
+10:39:11.599 -> 6\par
+10:39:11.599 -> crcValue = \par
+10:39:11.599 -> 102\par
+10:39:11.599 -> Unable to read Field Strength\par
+10:39:12.137 -> Calculated CRC = \par
+10:39:12.137 -> 8\par
+10:39:12.137 -> crcValue = \par
+10:39:12.137 -> 136\par
+10:39:12.137 -> Unable to read Angle\par
+10:39:12.137 -> Calculated CRC = \par
+10:39:12.137 -> 9\par
+10:39:12.137 -> crcValue = \par
+10:39:12.137 -> 153\par
+10:39:12.137 -> Unable to read Temperature\par
+10:39:12.137 -> Calculated CRC = \par
+10:39:12.137 -> 6\par
+10:39:12.137 -> crcValue = \par
+10:39:12.137 -> 102\par
+10:39:12.137 -> Unable to read Field Strength\par
+10:39:12.642 -> Calculated CRC = \par
+10:39:12.642 -> 8\par
+10:39:12.642 -> crcValue = \par
+10:39:12.642 -> 136\par
+10:39:12.642 -> Unable to read Angle\par
+10:39:12.642 -> Calculated CRC = \par
+10:39:12.642 -> 9\par
+10:39:12.642 -> crcValue = \par
+10:39:12.642 -> 153\par
+10:39:12.642 -> Unable to read Temperature\par
+10:39:12.642 -> Calculated CRC = \par
+10:39:12.642 -> 6\par
+10:39:12.642 -> crcValue = \par
+10:39:12.642 -> 102\par
+10:39:12.642 -> Unable to read Field Strength\par
+10:39:13.144 -> Calculated CRC = \par
+10:39:13.144 -> 8\par
+10:39:13.144 -> crcValue = \par
+10:39:13.144 -> 136\par
+10:39:13.144 -> Unable to read Angle\par
+10:39:13.144 -> Calculated CRC = \par
+10:39:13.144 -> 9\par
+10:39:13.144 -> crcValue = \par
+10:39:13.144 -> 153\par
+10:39:13.144 -> Unable to read Temperature\par
+10:39:13.144 -> Calculated CRC = \par
+10:39:13.144 -> 5\par
+10:39:13.144 -> crcValue = \par
+10:39:13.144 -> 85\par
+10:39:13.144 -> Unable to read Field Strength\par
+10:39:13.647 -> Calculated CRC = \par
+10:39:13.647 -> 8\par
+10:39:13.647 -> crcValue = \par
+10:39:13.647 -> 136\par
+10:39:13.647 -> Unable to read Angle\par
+10:39:13.647 -> Calculated CRC = \par
+10:39:13.647 -> 9\par
+10:39:13.647 -> crcValue = \par
+10:39:13.647 -> 153\par
+10:39:13.647 -> Unable to read Temperature\par
+10:39:13.647 -> Calculated CRC = \par
+10:39:13.647 -> 6\par
+10:39:13.647 -> crcValue = \par
+10:39:13.647 -> 102\par
+10:39:13.647 -> Unable to read Field Strength\par
+10:39:14.182 -> Calculated CRC = \par
+10:39:14.182 -> 8\par
+10:39:14.182 -> crcValue = \par
+10:39:14.182 -> 136\par
+10:39:14.182 -> Unable to read Angle\par
+10:39:14.182 -> Calculated CRC = \par
+10:39:14.182 -> 12\par
+10:39:14.182 -> crcValue = \par
+10:39:14.182 -> 204\par
+10:39:14.182 -> Unable to read Temperature\par
+10:39:14.182 -> Calculated CRC = \par
+10:39:14.182 -> 6\par
+10:39:14.182 -> crcValue = \par
+10:39:14.182 -> 102\par
+10:39:14.182 -> Unable to read Field Strength\par
+10:39:14.695 -> Calculated CRC = \par
+10:39:14.695 -> 8\par
+10:39:14.695 -> crcValue = \par
+10:39:14.695 -> 136\par
+10:39:14.695 -> Unable to read Angle\par
+10:39:14.695 -> Calculated CRC = \par
+10:39:14.695 -> 12\par
+10:39:14.695 -> crcValue = \par
+10:39:14.695 -> 204\par
+10:39:14.695 -> Unable to read Temperature\par
+10:39:14.695 -> Calculated CRC = \par
+10:39:14.695 -> 6\par
+10:39:14.695 -> crcValue = \par
+10:39:14.695 -> 102\par
+10:39:14.695 -> Unable to read Field Strength\par
+10:39:15.198 -> Calculated CRC = \par
+10:39:15.198 -> 8\par
+10:39:15.198 -> crcValue = \par
+10:39:15.198 -> 136\par
+10:39:15.198 -> Unable to read Angle\par
+10:39:15.198 -> Calculated CRC = \par
+10:39:15.198 -> 9\par
+10:39:15.198 -> crcValue = \par
+10:39:15.198 -> 153\par
+10:39:15.198 -> Unable to read Temperature\par
+10:39:15.198 -> Calculated CRC = \par
+10:39:15.198 -> 6\par
+10:39:15.198 -> crcValue = \par
+10:39:15.198 -> 102\par
+10:39:15.198 -> Unable to read Field Strength\par
+10:39:15.704 -> Calculated CRC = \par
+10:39:15.704 -> 8\par
+10:39:15.704 -> crcValue = \par
+10:39:15.704 -> 136\par
+10:39:15.704 -> Unable to read Angle\par
+10:39:15.704 -> Calculated CRC = \par
+10:39:15.704 -> 9\par
+10:39:15.704 -> crcValue = \par
+10:39:15.704 -> 153\par
+10:39:15.704 -> Unable to read Temperature\par
+10:39:15.704 -> Calculated CRC = \par
+10:39:15.704 -> 11\par
+10:39:15.704 -> crcValue = \par
+10:39:15.704 -> 187\par
+10:39:15.704 -> Unable to read Field Strength\par
+10:39:16.210 -> Calculated CRC = \par
+10:39:16.210 -> 8\par
+10:39:16.210 -> crcValue = \par
+10:39:16.210 -> 136\par
+10:39:16.210 -> Unable to read Angle\par
+10:39:16.210 -> Calculated CRC = \par
+10:39:16.210 -> 9\par
+10:39:16.210 -> crcValue = \par
+10:39:16.210 -> 153\par
+10:39:16.210 -> Unable to read Temperature\par
+10:39:16.210 -> Calculated CRC = \par
+10:39:16.210 -> 11\par
+10:39:16.210 -> crcValue = \par
+10:39:16.210 -> 187\par
+10:39:16.210 -> Unable to read Field Strength\par
+10:39:16.717 -> Calculated CRC = \par
+10:39:16.717 -> 8\par
+10:39:16.717 -> crcValue = \par
+10:39:16.717 -> 136\par
+10:39:16.717 -> Unable to read Angle\par
+10:39:16.717 -> Calculated CRC = \par
+10:39:16.717 -> 9\par
+10:39:16.717 -> crcValue = \par
+10:39:16.717 -> 153\par
+10:39:16.717 -> Unable to read Temperature\par
+10:39:16.717 -> Calculated CRC = \par
+10:39:16.717 -> 6\par
+10:39:16.717 -> crcValue = \par
+10:39:16.717 -> 102\par
+10:39:16.717 -> Unable to read Field Strength\par
+10:39:17.255 -> Calculated CRC = \par
+10:39:17.255 -> 8\par
+10:39:17.255 -> crcValue = \par
+10:39:17.255 -> 136\par
+10:39:17.255 -> Unable to read Angle\par
+10:39:17.255 -> Calculated CRC = \par
+10:39:17.255 -> 12\par
+10:39:17.255 -> crcValue = \par
+10:39:17.255 -> 204\par
+10:39:17.255 -> Unable to read Temperature\par
+10:39:17.255 -> Calculated CRC = \par
+10:39:17.255 -> 11\par
+10:39:17.255 -> crcValue = \par
+10:39:17.255 -> 187\par
+10:39:17.255 -> Unable to read Field Strength\par
+10:39:17.759 -> Calculated CRC = \par
+10:39:17.759 -> 8\par
+10:39:17.759 -> crcValue = \par
+10:39:17.759 -> 136\par
+10:39:17.759 -> Unable to read Angle\par
+10:39:17.759 -> Calculated CRC = \par
+10:39:17.759 -> 9\par
+10:39:17.759 -> crcValue = \par
+10:39:17.759 -> 153\par
+10:39:17.759 -> Unable to read Temperature\par
+10:39:17.759 -> Calculated CRC = \par
+10:39:17.759 -> 11\par
+10:39:17.759 -> crcValue = \par
+10:39:17.759 -> 187\par
+10:39:17.759 -> Unable to read Field Strength\par
+10:39:18.266 -> Calculated CRC = \par
+10:39:18.266 -> 8\par
+10:39:18.266 -> crcValue = \par
+10:39:18.266 -> 136\par
+10:39:18.266 -> Unable to read Angle\par
+10:39:18.266 -> Calculated CRC = \par
+10:39:18.266 -> 9\par
+10:39:18.266 -> crcValue = \par
+10:39:18.266 -> 153\par
+10:39:18.266 -> Unable to read Temperature\par
+10:39:18.266 -> Calculated CRC = \par
+10:39:18.266 -> 11\par
+10:39:18.266 -> crcValue = \par
+10:39:18.266 -> 187\par
+10:39:18.266 -> Unable to read Field Strength\par
+10:39:18.769 -> Calculated CRC = \par
+10:39:18.769 -> 8\par
+10:39:18.769 -> crcValue = \par
+10:39:18.769 -> 136\par
+10:39:18.769 -> Unable to read Angle\par
+10:39:18.769 -> Calculated CRC = \par
+10:39:18.769 -> 9\par
+10:39:18.769 -> crcValue = \par
+10:39:18.769 -> 153\par
+10:39:18.769 -> Unable to read Temperature\par
+10:39:18.769 -> Calculated CRC = \par
+10:39:18.769 -> 6\par
+10:39:18.769 -> crcValue = \par
+10:39:18.769 -> 102\par
+10:39:18.769 -> Unable to read Field Strength\par
+10:39:19.273 -> Calculated CRC = \par
+10:39:19.273 -> 8\par
+10:39:19.273 -> crcValue = \par
+10:39:19.273 -> 136\par
+10:39:19.273 -> Unable to read Angle\par
+10:39:19.273 -> Calculated CRC = \par
+10:39:19.273 -> 9\par
+10:39:19.273 -> crcValue = \par
+10:39:19.273 -> 153\par
+10:39:19.273 -> Unable to read Temperature\par
+10:39:19.273 -> Calculated CRC = \par
+10:39:19.273 -> 11\par
+10:39:19.273 -> crcValue = \par
+10:39:19.273 -> 187\par
+10:39:19.273 -> Unable to read Field Strength\par
+10:39:19.815 -> Calculated CRC = \par
+10:39:19.815 -> 8\par
+10:39:19.815 -> crcValue = \par
+10:39:19.815 -> 136\par
+10:39:19.815 -> Unable to read Angle\par
+10:39:19.815 -> Calculated CRC = \par
+10:39:19.815 -> 12\par
+10:39:19.815 -> crcValue = \par
+10:39:19.815 -> 204\par
+10:39:19.815 -> Unable to read Temperature\par
+10:39:19.815 -> Calculated CRC = \par
+10:39:19.815 -> 11\par
+10:39:19.815 -> crcValue = \par
+10:39:19.815 -> 187\par
+10:39:19.815 -> Unable to read Field Strength\par
+10:39:20.320 -> Calculated CRC = \par
+10:39:20.320 -> 8\par
+10:39:20.320 -> crcValue = \par
+10:39:20.320 -> 136\par
+10:39:20.320 -> Unable to read Angle\par
+10:39:20.320 -> Calculated CRC = \par
+10:39:20.320 -> 9\par
+10:39:20.320 -> crcValue = \par
+10:39:20.320 -> 153\par
+10:39:20.320 -> Unable to read Temperature\par
+10:39:20.320 -> Calculated CRC = \par
+10:39:20.320 -> 11\par
+10:39:20.320 -> crcValue = \par
+10:39:20.320 -> 187\par
+10:39:20.320 -> Unable to read Field Strength\par
+10:39:20.827 -> Calculated CRC = \par
+10:39:20.827 -> 8\par
+10:39:20.827 -> crcValue = \par
+10:39:20.827 -> 136\par
+10:39:20.827 -> Unable to read Angle\par
+10:39:20.827 -> Calculated CRC = \par
+10:39:20.827 -> 9\par
+10:39:20.827 -> crcValue = \par
+10:39:20.827 -> 153\par
+10:39:20.827 -> Unable to read Temperature\par
+10:39:20.827 -> Calculated CRC = \par
+10:39:20.827 -> 11\par
+10:39:20.827 -> crcValue = \par
+10:39:20.827 -> 187\par
+10:39:20.827 -> Unable to read Field Strength\par
+10:39:21.332 -> Calculated CRC = \par
+10:39:21.332 -> 8\par
+10:39:21.332 -> crcValue = \par
+10:39:21.332 -> 136\par
+10:39:21.332 -> Unable to read Angle\par
+10:39:21.332 -> Calculated CRC = \par
+10:39:21.332 -> 12\par
+10:39:21.332 -> crcValue = \par
+10:39:21.332 -> 204\par
+10:39:21.332 -> Unable to read Temperature\par
+10:39:21.332 -> Calculated CRC = \par
+10:39:21.332 -> 6\par
+10:39:21.332 -> crcValue = \par
+10:39:21.332 -> 102\par
+10:39:21.332 -> Unable to read Field Strength\par
+10:39:21.838 -> Calculated CRC = \par
+10:39:21.838 -> 8\par
+10:39:21.838 -> crcValue = \par
+10:39:21.838 -> 136\par
+10:39:21.838 -> Unable to read Angle\par
+10:39:21.838 -> Calculated CRC = \par
+10:39:21.838 -> 12\par
+10:39:21.838 -> crcValue = \par
+10:39:21.838 -> 204\par
+10:39:21.838 -> Unable to read Temperature\par
+10:39:21.838 -> Calculated CRC = \par
+10:39:21.838 -> 11\par
+10:39:21.838 -> crcValue = \par
+10:39:21.838 -> 187\par
+10:39:21.838 -> Unable to read Field Strength\par
+10:39:22.376 -> Calculated CRC = \par
+10:39:22.376 -> 8\par
+10:39:22.376 -> crcValue = \par
+10:39:22.376 -> 136\par
+10:39:22.376 -> Unable to read Angle\par
+10:39:22.376 -> Calculated CRC = \par
+10:39:22.376 -> 9\par
+10:39:22.376 -> crcValue = \par
+10:39:22.376 -> 153\par
+10:39:22.376 -> Unable to read Temperature\par
+10:39:22.376 -> Calculated CRC = \par
+10:39:22.376 -> 6\par
+10:39:22.376 -> crcValue = \par
+10:39:22.376 -> 102\par
+10:39:22.376 -> Unable to read Field Strength\par
+10:39:22.884 -> Calculated CRC = \par
+10:39:22.884 -> 8\par
+10:39:22.884 -> crcValue = \par
+10:39:22.884 -> 136\par
+10:39:22.884 -> Unable to read Angle\par
+10:39:22.884 -> Calculated CRC = \par
+10:39:22.884 -> 9\par
+10:39:22.884 -> crcValue = \par
+10:39:22.884 -> 153\par
+10:39:22.884 -> Unable to read Temperature\par
+10:39:22.884 -> Calculated CRC = \par
+10:39:22.884 -> 11\par
+10:39:22.884 -> crcValue = \par
+10:39:22.884 -> 187\par
+10:39:22.884 -> Unable to read Field Strength\par
+10:39:23.391 -> Calculated CRC = \par
+10:39:23.391 -> 8\par
+10:39:23.391 -> crcValue = \par
+10:39:23.391 -> 136\par
+10:39:23.391 -> Unable to read Angle\par
+10:39:23.391 -> Calculated CRC = \par
+10:39:23.391 -> 9\par
+10:39:23.391 -> crcValue = \par
+10:39:23.391 -> 153\par
+10:39:23.391 -> Unable to read Temperature\par
+10:39:23.391 -> Calculated CRC = \par
+10:39:23.391 -> 8\par
+10:39:23.391 -> crcValue = \par
+10:39:23.391 -> 136\par
+10:39:23.391 -> Unable to read Field Strength\par
+10:39:23.897 -> Calculated CRC = \par
+10:39:23.897 -> 8\par
+10:39:23.897 -> crcValue = \par
+10:39:23.897 -> 136\par
+10:39:23.897 -> Unable to read Angle\par
+10:39:23.897 -> Calculated CRC = \par
+10:39:23.897 -> 12\par
+10:39:23.897 -> crcValue = \par
+10:39:23.897 -> 204\par
+10:39:23.897 -> Unable to read Temperature\par
+10:39:23.897 -> Calculated CRC = \par
+10:39:23.897 -> 6\par
+10:39:23.897 -> crcValue = \par
+10:39:23.897 -> 102\par
+10:39:23.897 -> Unable to read Field Strength\par
+10:39:24.404 -> Calculated CRC = \par
+10:39:24.404 -> 8\par
+10:39:24.404 -> crcValue = \par
+10:39:24.404 -> 136\par
+10:39:24.404 -> Unable to read Angle\par
+10:39:24.404 -> Calculated CRC = \par
+10:39:24.404 -> 12\par
+10:39:24.404 -> crcValue = \par
+10:39:24.404 -> 204\par
+10:39:24.404 -> Unable to read Temperature\par
+10:39:24.404 -> Calculated CRC = \par
+10:39:24.404 -> 8\par
+10:39:24.404 -> crcValue = \par
+10:39:24.404 -> 136\par
+10:39:24.404 -> Unable to read Field Strength\par
+10:39:24.909 -> Calculated CRC = \par
+10:39:24.909 -> 8\par
+10:39:24.909 -> crcValue = \par
+10:39:24.909 -> 136\par
+10:39:24.909 -> Unable to read Angle\par
+10:39:24.909 -> Calculated CRC = \par
+10:39:24.909 -> 9\par
+10:39:24.909 -> crcValue = \par
+10:39:24.909 -> 153\par
+10:39:24.909 -> Unable to read Temperature\par
+10:39:24.909 -> Calculated CRC = \par
+10:39:24.909 -> 11\par
+10:39:24.909 -> crcValue = \par
+10:39:24.909 -> 187\par
+10:39:24.909 -> Unable to read Field Strength\par
+10:39:25.444 -> Calculated CRC = \par
+10:39:25.444 -> 8\par
+10:39:25.444 -> crcValue = \par
+10:39:25.444 -> 136\par
+10:39:25.444 -> Unable to read Angle\par
+10:39:25.444 -> Calculated CRC = \par
+10:39:25.444 -> 12\par
+10:39:25.444 -> crcValue = \par
+10:39:25.444 -> 204\par
+10:39:25.444 -> Unable to read Temperature\par
+10:39:25.444 -> Calculated CRC = \par
+10:39:25.444 -> 11\par
+10:39:25.444 -> crcValue = \par
+10:39:25.444 -> 187\par
+10:39:25.444 -> Unable to read Field Strength\par
+10:39:25.951 -> Calculated CRC = \par
+10:39:25.951 -> 8\par
+10:39:25.951 -> crcValue = \par
+10:39:25.951 -> 136\par
+10:39:25.951 -> Unable to read Angle\par
+10:39:25.951 -> Calculated CRC = \par
+10:39:25.951 -> 12\par
+10:39:25.951 -> crcValue = \par
+10:39:25.951 -> 204\par
+10:39:25.951 -> Unable to read Temperature\par
+10:39:25.951 -> Calculated CRC = \par
+10:39:25.951 -> 6\par
+10:39:25.951 -> crcValue = \par
+10:39:25.951 -> 102\par
+10:39:25.951 -> Unable to read Field Strength\par
+10:39:26.459 -> Calculated CRC = \par
+10:39:26.459 -> 8\par
+10:39:26.459 -> crcValue = \par
+10:39:26.459 -> 136\par
+10:39:26.459 -> Unable to read Angle\par
+10:39:26.459 -> Calculated CRC = \par
+10:39:26.459 -> 9\par
+10:39:26.459 -> crcValue = \par
+10:39:26.459 -> 153\par
+10:39:26.459 -> Unable to read Temperature\par
+10:39:26.459 -> Calculated CRC = \par
+10:39:26.459 -> 11\par
+10:39:26.459 -> crcValue = \par
+10:39:26.459 -> 187\par
+10:39:26.459 -> Unable to read Field Strength\par
+10:39:26.963 -> Calculated CRC = \par
+10:39:26.963 -> 8\par
+10:39:26.963 -> crcValue = \par
+10:39:26.963 -> 136\par
+10:39:26.963 -> Unable to read Angle\par
+10:39:26.963 -> Calculated CRC = \par
+10:39:26.963 -> 12\par
+10:39:26.963 -> crcValue = \par
+10:39:26.963 -> 204\par
+10:39:26.963 -> Unable to read Temperature\par
+10:39:26.963 -> Calculated CRC = \par
+10:39:26.963 -> 11\par
+10:39:26.963 -> crcValue = \par
+10:39:26.963 -> 187\par
+10:39:26.963 -> Unable to read Field Strength\par
+10:39:27.467 -> Calculated CRC = \par
+10:39:27.467 -> 8\par
+10:39:27.467 -> crcValue = \par
+10:39:27.467 -> 136\par
+10:39:27.467 -> Unable to read Angle\par
+10:39:27.467 -> Calculated CRC = \par
+10:39:27.467 -> 12\par
+10:39:27.467 -> crcValue = \par
+10:39:27.467 -> 204\par
+10:39:27.467 -> Unable to read Temperature\par
+10:39:27.467 -> Calculated CRC = \par
+10:39:27.467 -> 6\par
+10:39:27.467 -> crcValue = \par
+10:39:27.467 -> 102\par
+10:39:27.467 -> Unable to read Field Strength\par
+10:39:28.007 -> Calculated CRC = \par
+10:39:28.007 -> 8\par
+10:39:28.007 -> crcValue = \par
+10:39:28.007 -> 136\par
+10:39:28.007 -> Unable to read Angle\par
+10:39:28.007 -> Calculated CRC = \par
+10:39:28.007 -> 12\par
+10:39:28.007 -> crcValue = \par
+10:39:28.007 -> 204\par
+10:39:28.007 -> Unable to read Temperature\par
+10:39:28.007 -> Calculated CRC = \par
+10:39:28.007 -> 11\par
+10:39:28.007 -> crcValue = \par
+10:39:28.007 -> 187\par
+10:39:28.007 -> Unable to read Field Strength\par
+10:39:28.514 -> Calculated CRC = \par
+10:39:28.514 -> 8\par
+10:39:28.514 -> crcValue = \par
+10:39:28.514 -> 136\par
+10:39:28.514 -> Unable to read Angle\par
+10:39:28.514 -> Calculated CRC = \par
+10:39:28.514 -> 9\par
+10:39:28.514 -> crcValue = \par
+10:39:28.514 -> 153\par
+10:39:28.514 -> Unable to read Temperature\par
+10:39:28.514 -> Calculated CRC = \par
+10:39:28.514 -> 11\par
+10:39:28.514 -> crcValue = \par
+10:39:28.514 -> 187\par
+10:39:28.514 -> Unable to read Field Strength\par
+10:39:29.019 -> Calculated CRC = \par
+10:39:29.019 -> 8\par
+10:39:29.019 -> crcValue = \par
+10:39:29.019 -> 136\par
+10:39:29.019 -> Unable to read Angle\par
+10:39:29.019 -> Calculated CRC = \par
+10:39:29.019 -> 12\par
+10:39:29.019 -> crcValue = \par
+10:39:29.019 -> 204\par
+10:39:29.019 -> Unable to read Temperature\par
+10:39:29.019 -> Calculated CRC = \par
+10:39:29.019 -> 11\par
+10:39:29.019 -> crcValue = \par
+10:39:29.019 -> 187\par
+10:39:29.019 -> Unable to read Field Strength\par
+10:39:29.523 -> Calculated CRC = \par
+10:39:29.523 -> 8\par
+10:39:29.523 -> crcValue = \par
+10:39:29.523 -> 136\par
+10:39:29.523 -> Unable to read Angle\par
+10:39:29.523 -> Calculated CRC = \par
+10:39:29.523 -> 12\par
+10:39:29.523 -> crcValue = \par
+10:39:29.523 -> 204\par
+10:39:29.523 -> Unable to read Temperature\par
+10:39:29.523 -> Calculated CRC = \par
+10:39:29.523 -> 11\par
+10:39:29.523 -> crcValue = \par
+10:39:29.523 -> 187\par
+10:39:29.523 -> Unable to read Field Strength\par
+10:39:30.033 -> Calculated CRC = \par
+10:39:30.033 -> 8\par
+10:39:30.033 -> crcValue = \par
+10:39:30.033 -> 136\par
+10:39:30.033 -> Unable to read Angle\par
+10:39:30.033 -> Calculated CRC = \par
+10:39:30.033 -> 12\par
+10:39:30.033 -> crcValue = \par
+10:39:30.033 -> 204\par
+10:39:30.033 -> Unable to read Temperature\par
+10:39:30.033 -> Calculated CRC = \par
+10:39:30.033 -> 11\par
+10:39:30.033 -> crcValue = \par
+10:39:30.033 -> 187\par
+10:39:30.033 -> Unable to read Field Strength\par
+10:39:30.541 -> Calculated CRC = \par
+10:39:30.541 -> 8\par
+10:39:30.541 -> crcValue = \par
+10:39:30.541 -> 136\par
+10:39:30.541 -> Unable to read Angle\par
+10:39:30.541 -> Calculated CRC = \par
+10:39:30.541 -> 12\par
+10:39:30.541 -> crcValue = \par
+10:39:30.541 -> 204\par
+10:39:30.541 -> Unable to read Temperature\par
+10:39:30.541 -> Calculated CRC = \par
+10:39:30.541 -> 11\par
+10:39:30.541 -> crcValue = \par
+10:39:30.541 -> 187\par
+10:39:30.541 -> Unable to read Field Strength\par
+10:39:31.077 -> Calculated CRC = \par
+10:39:31.077 -> 8\par
+10:39:31.077 -> crcValue = \par
+10:39:31.077 -> 136\par
+10:39:31.077 -> Unable to read Angle\par
+10:39:31.077 -> Calculated CRC = \par
+10:39:31.077 -> 12\par
+10:39:31.077 -> crcValue = \par
+10:39:31.077 -> 204\par
+10:39:31.077 -> Unable to read Temperature\par
+10:39:31.077 -> Calculated CRC = \par
+10:39:31.077 -> 11\par
+10:39:31.077 -> crcValue = \par
+10:39:31.077 -> 187\par
+10:39:31.077 -> Unable to read Field Strength\par
+10:39:31.582 -> Calculated CRC = \par
+10:39:31.582 -> 8\par
+10:39:31.582 -> crcValue = \par
+10:39:31.582 -> 136\par
+10:39:31.582 -> Unable to read Angle\par
+10:39:31.582 -> Calculated CRC = \par
+10:39:31.582 -> 12\par
+10:39:31.582 -> crcValue = \par
+10:39:31.582 -> 204\par
+10:39:31.582 -> Unable to read Temperature\par
+10:39:31.582 -> Calculated CRC = \par
+10:39:31.582 -> 6\par
+10:39:31.582 -> crcValue = \par
+10:39:31.582 -> 102\par
+10:39:31.582 -> Unable to read Field Strength\par
+10:39:32.087 -> Calculated CRC = \par
+10:39:32.087 -> 8\par
+10:39:32.087 -> crcValue = \par
+10:39:32.087 -> 136\par
+10:39:32.087 -> Unable to read Angle\par
+10:39:32.087 -> Calculated CRC = \par
+10:39:32.087 -> 12\par
+10:39:32.087 -> crcValue = \par
+10:39:32.087 -> 204\par
+10:39:32.087 -> Unable to read Temperature\par
+10:39:32.087 -> Calculated CRC = \par
+10:39:32.087 -> 11\par
+10:39:32.087 -> crcValue = \par
+10:39:32.087 -> 187\par
+10:39:32.087 -> Unable to read Field Strength\par
+10:39:32.590 -> Calculated CRC = \par
+10:39:32.590 -> 8\par
+10:39:32.590 -> crcValue = \par
+10:39:32.590 -> 136\par
+10:39:32.590 -> Unable to read Angle\par
+10:39:32.590 -> Calculated CRC = \par
+10:39:32.590 -> 12\par
+10:39:32.590 -> crcValue = \par
+10:39:32.590 -> 204\par
+10:39:32.590 -> Unable to read Temperature\par
+10:39:32.590 -> Calculated CRC = \par
+10:39:32.590 -> 11\par
+10:39:32.590 -> crcValue = \par
+10:39:32.590 -> 187\par
+}
+ 
